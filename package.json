@@ -1,7 +1,7 @@
 {
-  "name": "node",
-  "version": "0.1.0",
-  "private": true,
+  "name": "dosn",
+  "version": "0.0.1",
+  "description": "nginx+node+koa+mysql+ejs 简单尝试",
   "scripts": {
     "start": "node bin/www",
     "server": "node --trace-deprecation server.js"
@@ -20,5 +20,18 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
-  }
+  },
+  "keywords": [
+    "node",
+    "ejs",
+    "mysql",
+    "nginx"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:manydots/node.git"
+  },
+  "homepage": "https://github.com/manydots/node#readme",
+  "author": "mo.chen",
+  "license": "MIT"
 }
