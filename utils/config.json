@@ -1,0 +1,14 @@
+{
+	"mysql":{
+		"host":"",
+		"user":"root",
+		"password":"",
+		"database":"",
+		"port":"3306"
+	},
+	"sql":{
+		"getUser":"select * from"
+	},
+	"isLog":true,
+	"isConsole":true
+}
