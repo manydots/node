@@ -1,6 +1,6 @@
 {
   "name": "dosn",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "nginx+node+koa+mysql+ejs 简单尝试",
   "scripts": {
     "start": "node bin/www",
@@ -25,7 +25,10 @@
     "node",
     "ejs",
     "mysql",
-    "nginx"
+    "nginx",
+    "screen",
+    "koa",
+    "koa2"
   ],
   "repository": {
     "type": "git",

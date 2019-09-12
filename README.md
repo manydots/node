@@ -48,6 +48,7 @@
           (亲测可用,转自:https://www.jianshu.com/p/d934d3ba67ec)
 
     3、node项目可以使用pm2管理
+    4、在linux上使用screen挂起任务
 
 
   遇到的坑：
