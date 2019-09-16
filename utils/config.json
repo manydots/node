@@ -10,5 +10,5 @@
 		"getUser":"select * from"
 	},
 	"isLog":true,
-	"isConsole":true
+	"isConsole":false
 }

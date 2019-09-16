@@ -6,31 +6,67 @@
     
 </head>
 <body>
+	<div class="container">
+ 
+
     <div><%= title %></div>
+	<div>
+		<div class="btn-group">
+		  <span style="float: left;">防抖</span>
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <span class="dropdown-toggle-value">300</span><span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu">
+		  	<li>100</li>
+		    <li>300</li>
+		    <li>500</li>
+		    <li>1000</li>
+		  </ul>ms内
+		</div>
+	</div>
+    
   
     <a href="/login"><button type="button" class="btn btn-success">登录</button></a>
     
    <!--  <a href="/register"><button type="button" class="btn btn-danger">注册</button></a> -->
-    <div class="stest">
-    	stest
+
+    <button type="button" class="btn btn-success stest">
+    	debounce防抖函数
+    </button>
     </div>
 
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/public/js-extend.js"></script>
+
 <script type="text/javascript">
-	$('.stest').on('click',function(){
-		var params = {
-			userName:'ssss',
-			passWord:'ffdsfdf'
-		}
-		$.ajax({
-			type:'post',
-			url:'/webapp/api',
-			data:params,
-			success:function(res){
-				console.log(res)
-			}
+	$(function(){
+
+		$('.dropdown-menu li').on('click',function(){
+			$('.dropdown-toggle-value').html($(this).text())
 		})
+		function handle() {
+    		console.log(Math.random());
+		}
+		
+		var delays = $('.dropdown-toggle-value').text()*1;
+		$('.stest').on('click',debounce(clickfn,delays,false));
+		//$('.stest')[0].addEventListener("click",debounce(clickfn,1000,true));
+		function clickfn(){
+			var params = {
+				userName:'ssss',
+				passWord:'ffdsfdf'
+			}
+			$.ajax({
+				type:'post',
+				url:'/webapp/api',
+				data:params,
+				success:function(res){
+					console.log(res)
+				}
+			})
+		}
 	})
+	
+	
 </script>
 </html>

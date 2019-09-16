@@ -25,7 +25,7 @@
 
   node环境:
     1、yum安装node会安装一个老版本;
-    2、建议使用 n 管理node版本;
+    2、建议使用 n 管理node版本(npm install -g n);
         n 常用的命令有：
         n 会列出所有安装的版本供你切换
         n latest 安装最新版本

@@ -4,7 +4,8 @@
   "description": "nginx+node+koa+mysql+ejs 简单尝试",
   "scripts": {
     "start": "node bin/www",
-    "server": "node --trace-deprecation server.js"
+    "server": "node --trace-deprecation server.js",
+    "wechat": "node --trace-deprecation wechat.js"
   },
   "dependencies": {
     "ejs": "^2.6.1",
@@ -16,7 +17,8 @@
     "koa-static-router": "^1.3.0",
     "koa-views": "^6.2.0",
     "log4js": "^4.5.1",
-    "mysql": "^2.17.1"
+    "mysql": "^2.17.1",
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
