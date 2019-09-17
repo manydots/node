@@ -9,6 +9,8 @@
 	"sql":{
 		"getUser":"select * from"
 	},
+	"port":3030,
+	"delay":400,
 	"isLog":true,
 	"isConsole":false
 }

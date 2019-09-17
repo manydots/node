@@ -16,10 +16,14 @@
 
 
   npm run server
-  建议使用启动方式
+  建议使用启动方式(debounce防抖函数500ms测试)
+
+  npm run wechat
+  简单聊天室启动方式(debounce防抖函数400ms测试)[running]
 
   npm run start or npm start
   koa框架启动方式，建议自行配置
+
 
   预览地址 http://doso.jeeas.cn
 
@@ -53,7 +57,7 @@
 
   遇到的坑：
 
-	koa:使用 nginx+node+koa+mysql+ejs 简单尝试，透传获取真实ip；
+	  koa:使用 nginx+node+koa+mysql+ejs 简单尝试，透传获取真实ip；
 
   	log4js:日志级别无法拆分(原因未知)，未启用线程，都会打在info日志里；
 

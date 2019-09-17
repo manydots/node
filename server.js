@@ -8,9 +8,10 @@ const bodyparser = require('koa-bodyparser');
 const router = require('./routes/test');
 const static = require('koa-static');
 const statics = require('koa-static-router');
+const config = require('./utils/config.json');
 //const fs = require('fs');
 const app = new Koa();
-const port = 3030;
+const port = config.port;
 const url = `http://127.0.0.1:${port}`; //后端服务器地址
 
 app.proxy = true;
