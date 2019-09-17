@@ -9,22 +9,39 @@
    * { margin: 0; padding: 0; box-sizing: border-box; }
    body { font: 13px Helvetica, Arial; }
    .form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-   .form input { border: 0; padding: 10px; width: 90%; margin-right: .5%;float: left;}
-   .form .submit { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px;cursor: pointer;float: left; }
+   .form input { border: 0; padding: 10px; width: 80%; margin-right: .5%;float: left;}
+   .form .submit { width: 19%; text-align: center;background: rgb(130, 224, 255); border: none; padding: 10px;cursor: pointer;float: left; }
    #messages { list-style-type: none; margin: 0; padding: 0; }
    #messages li { padding: 5px 10px; }
    #messages li:nth-child(odd) { background: #eee; }
+   .total{
+      text-align: center;
+   }
+   b{
+    color: red;
+   }
   </style>
  </head>
  <body>
-  <ul id="messages"></ul>
+  <ul id="messages">
+    <li class="total"></li>
+  </ul>
   <div class="form">
    <input id="m" placeholder='debounce防抖函数<%= delay %>ms;false 表非立即执行[触发事件后函数会立即执行，然后 n 秒内不触发事件才能继续执行函数的效果]' autocomplete="off" /><div class="submit">Send</div>
   </div>
    <script>
      $(function () {
        var socket = io();
+       var users = '临时用户:'+ Math.round(Math.random()*10000);
+       socket.emit("join", users)
 
+      socket.on("join", function (user) {
+           addNews(user + " 加入了群聊")
+      })
+      socket.on('users', function(data) {
+        $('.total').html(("当前有<b>" + data.number+"</b>个用户在线"));
+       })
+       
        function submits(){
           socket.emit('chat-message', $('#m').val());
           $('#m').val('');
@@ -33,9 +50,13 @@
        $('.submit').on('click',debounce(submits,<%= delay %>,false));
 
        socket.on('chat-message', function(msg){
-         var txt = (msg == '' ? '空消息':msg);
-         $('#messages').append('<li>'+txt+'</li>');
+         addNews(msg)
        });
+
+       function addNews(msg){
+          var txt = (msg == '' ? '空消息':msg);
+          $('#messages').append('<li>'+txt+'</li>');
+       }  
      });
    </script>
  </body>

@@ -77,3 +77,37 @@
 
 
 ``` 
+
+### nginx下配置socket.io
+```javascript
+    
+    //解决ws连接问题 参考:https://www.cnblogs.com/qkstart/p/11246173.html
+
+    upstream nodes {
+      ip_hash;
+      server localhost:3030;
+    }
+
+    server {
+
+      listen       80;
+      server_name  doso.jeeas.cn;
+      access_log  logs/doso.log;
+
+      location / {
+          proxy_pass http://nodes; #反向代理集群
+          proxy_buffering off;    #此参数非常重要，必须禁用代理缓存.
+          proxy_set_header       Host $host:$server_port;
+          proxy_set_header        X-Real-IP $remote_addr;
+          proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "Upgrade";
+      }
+
+   }
+
+
+
+
+```
