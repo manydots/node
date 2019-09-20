@@ -14,7 +14,7 @@
   demo结构还在优化中，nginx监听doso.jeeas.cn的80端口，转发到内部3030端口；
   nginx未配置负载均衡，已拦截ip访问；
 
-  npm run chat
+  npm run chat:http
   简单聊天室启动方式[running]
 
   npm run server
@@ -27,7 +27,7 @@
   koa框架启动方式，建议自行配置
 
 
-  预览地址 http://doso.jeeas.cn
+  预览地址 https://doso.jeeas.cn
 
   node环境:
     1、yum安装node会安装一个老版本;
@@ -86,7 +86,7 @@
 ### 关于https
 ```javascript
   
-  通过https访问才可以调用 桌面通知Notification.requestPermission推送通知
+  通过https访问才可以调用桌面通知Notification.requestPermission推送消息
 
   阿里云免费SSL: https://common-buy.aliyun.com/?commodityCode=cas&aly_as=zI60LOb8#/buy
   配置可以访问

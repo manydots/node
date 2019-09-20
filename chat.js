@@ -6,6 +6,8 @@ const Router = require('koa-router');
 const path = require('path');
 const views = require('koa-views');
 const io = require('socket.io')(server);
+const log = require('./utils/log');
+const Tools = require('./utils/index');
 //const statics = require('koa-static-router');
 const static = require('koa-static');
 var serverName = process.env.NAME || 'Unknown';
@@ -22,14 +24,20 @@ app.use(static(__dirname, './public'));
 app.use(views(path.join(__dirname, './views'), {
 	extension: 'ejs'
 }))
-
+const apiStartTime = new Date();
 // 首页路由
 let router = new Router();
 router.get('/', async ctx => {
+
 	let title = 'Socket.IO chat';
 	await ctx.render('chat', {
 		title
 	});
+
+	const ms = new Date() - apiStartTime;
+	let logs = `ip:[${Tools.getClientIp(ctx.req,'nginx')}],响应时间[${ms}ms]`;
+	console.log(logs)
+	log.info(logs);
 });
 app.use(router.routes());
 
@@ -40,6 +48,10 @@ io.on('connection', function(socket) {
 			username: socket.username,
 			message: data
 		});
+
+		let logs = `用户[${socket.username}]说:${data}`;
+		console.log(logs)
+		log.info(logs);
 	});
 
 	socket.on('add user', function(username) {
@@ -50,10 +62,15 @@ io.on('connection', function(socket) {
 		socket.emit('login', {
 			numUsers: usersOnline
 		});
+
 		socket.broadcast.emit('user joined', {
 			username: socket.username,
 			numUsers: usersOnline
 		});
+
+		let logs = `[${socket.username}]进入了聊天室，当前在线[${usersOnline}]人`;
+		console.log(logs)
+		log.info(logs);
 	});
 
 	socket.on('typing', function() {
@@ -75,6 +92,9 @@ io.on('connection', function(socket) {
 				username: socket.username,
 				numUsers: usersOnline
 			});
+			let logs = `[${socket.username}]离开了聊天室，当前在线[${usersOnline}]人`;
+			console.log(logs)
+			log.info(logs);
 		}
 	});
 });
