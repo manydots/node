@@ -38,9 +38,17 @@
       socket.on("join", function (user) {
            addNews(user + " 加入了群聊")
       })
+
       socket.on('users', function(data) {
-        $('.total').html(("当前有<b>" + data.number+"</b>个用户在线"));
-       })
+
+        if(data.tips && data.tips != ''){
+          addNews(data.tips)
+        }
+        if(data.number){
+          $('.total').html(("当前有<b>" + data.number+"</b>个用户在线"));
+        }
+        
+      })
        
        function submits(){
           socket.emit('chat-message', $('#m').val());

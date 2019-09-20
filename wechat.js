@@ -49,6 +49,7 @@ app.use(router.routes());
 
 // socket连接
 let  count = 0;
+
 io.on('connection', (socket) => {
     count++;
     // 打开新的连接显示的内容
@@ -56,6 +57,9 @@ io.on('connection', (socket) => {
     // 显示数据到已经打开的连接上
     socket.broadcast.emit('users', {number: count});
     const ms = new Date() - apiStartTime;
+
+
+
     socket.on("join", function (name) {
         usocket[name] = socket;
         io.emit("join", name);
@@ -70,9 +74,11 @@ io.on('connection', (socket) => {
         let logs = `api:[/disconnect],响应时间[${ms}ms],send:[user disconnected]`;
         log.info(logs);
         count--;
-        console.log('user disconnected退出了');
-        socket.broadcast.emit('users', {number: count});
+        socket.broadcast.emit('users', {tips:'神秘人退出了聊天',number: count});
+        console.log('user disconnected');
+
     });
+    console.log(io.sockets)
 });
 
 // 监听端口
