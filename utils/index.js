@@ -56,9 +56,39 @@ function isLocal() {
     var host = window.location.host;
     return host.indexOf('127.0.0.1') > -1 || host.indexOf('localhost') > -1 || host.indexOf('192.168.1.15') > -1;
 }
+const allow = ['/api/login'];
+function checkLogin(ctx, temple) {
+    let url = ctx.originalUrl;
+    if (allow.indexOf(url) > -1) {
+        logger.info('当前地址可直接访问')
+    } else {
+        ctx.render('login', {
+            title: '请登录',
+            isConsole: false
+        });
+
+        if (ctx.isAuthenticated()) {
+            //授权
+            if (url === '/') {
+                //ctx.redirect('/projectList')
+
+            }
+            console.log('login status validate success')
+        } else {
+
+            if (!ctx.cookies.get('userToken') || ctx.cookies.get('userToken') == '') {
+                ctx.render('login', {
+                    title: '请登录',
+                    isConsole: false
+                });
+            }
+        }
+    }
+}
 
 module.exports = {
     debounce: debounce,
     isLocal: isLocal,
-    getClientIp:getClientIp
+    getClientIp: getClientIp,
+    checkLogin: checkLogin
 };

@@ -12,5 +12,7 @@
 	"port":3030,
 	"delay":400,
 	"isLog":true,
-	"isConsole":false
+	"isConsole":false,
+	"tokenHttp":"dev.jeeas.cn",
+	"tokenProject":"commonuser"
 }

@@ -1,16 +1,16 @@
 var Koa = require('koa');
 var app = new Koa();
-var port = process.env.port || 3030;
 var server = require('http').createServer(app.callback());
-const Router = require('koa-router');
+const bodyparser = require('koa-bodyparser')
 const path = require('path');
 const views = require('koa-views');
 const io = require('socket.io')(server);
-const log = require('./utils/log');
-const Tools = require('./utils/index');
 //const statics = require('koa-static-router');
 const static = require('koa-static');
+const router = require('./routes/chat');
+const log = require('./utils/log');
 var serverName = process.env.NAME || 'Unknown';
+var port = process.env.port || 3030;
 var usersOnline = 0;
 
 // app.use(statics([{
@@ -18,28 +18,32 @@ var usersOnline = 0;
 // 	router: '/public/' //路由
 // }]))
 
+app.use(bodyparser({
+	enableTypes: ['json', 'form', 'text']
+}))
+
 app.use(static(__dirname, './public'));
 
 // 加载模板引擎,文件会自动拼接此后缀
 app.use(views(path.join(__dirname, './views'), {
 	extension: 'ejs'
 }))
-const apiStartTime = new Date();
-// 首页路由
-let router = new Router();
-router.get('/', async ctx => {
 
-	let title = 'Socket.IO chat';
-	await ctx.render('chat', {
-		title
-	});
 
-	const ms = new Date() - apiStartTime;
-	let logs = `ip:[${Tools.getClientIp(ctx.req,'nginx')}],响应时间[${ms}ms]`;
-	console.log(logs)
-	log.info(logs);
+app.use(async (ctx, next) => {
+	//以api开头的异步请求接口都会被转发
+	const apiStartTime = new Date();
+	ctx.util = {
+		apiStartTime: apiStartTime
+	}
+	return next();
 });
+
+// 加载路由中间件
 app.use(router.routes());
+
+
+//app.use(router.routes()).use(router.allowedMethods())
 
 io.on('connection', function(socket) {
 	var addedUser = false;
@@ -53,10 +57,11 @@ io.on('connection', function(socket) {
 		console.log(logs)
 		log.info(logs);
 	});
-
 	socket.on('add user', function(username) {
 		if (addedUser) return;
 		socket.username = username;
+		socket.token = socket.id;
+		//console.log(socket.handshake.query)
 		usersOnline++;
 		addedUser = true;
 		socket.emit('login', {
